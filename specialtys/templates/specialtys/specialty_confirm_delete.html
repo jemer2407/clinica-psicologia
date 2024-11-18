@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Especialidad{% endblock %}
+{% block content %}
+  <!-- Doctors Section -->
+  
+  <section id="doctors" class="doctors section">
+
+    <!-- Section Title -->
+    <div class="container section-title">
+      <h1>Eliminar Especialidad</h1>      
+    </div><!-- End Section Title -->
+    <div class="container">
+      <div class="row gy-4">
+        <form method="post">{% csrf_token %}
+            <p>¿Seguro que quieres eliminar la especialidad <strong>{{object.name}}</strong>?</p>
+            
+            <input type="submit" value="Confirmar" class="btn btn-success">
+            <a href="{% url 'specialtys-maintenance-list' %}" class="btn btn-danger" id="btn-delete-specialty">Cancelar</a> 
+        </form>
+      </div>
+    </div>
+  </section><!-- /Doctors Section -->
+
+{% endblock %}

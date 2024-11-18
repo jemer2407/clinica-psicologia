@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{specialty.name}}{% endblock %}
+{% block content %}
+
+<section id="departments" class="departments section">
+        <!-- Section Title -->
+    <div class="container section-title">
+        <h1>{{specialty.name}}</h1>        
+    </div><!-- End Section Title -->
+    <div class="container">
+        <div class="row">        
+            <div class="col-lg-8 text-center order-2 order-lg-2">
+                <p>{{specialty.description|safe}}</p>
+            </div>
+            <div class="col-lg-4 details order-1 order-lg-1">
+                <img src="{{specialty.image.url}}" class="img-fluid">
+            </div>
+                    
+        <div>        
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Pacientes{% endblock %}
+{% block content %}
+  <!-- Doctors Section -->
+  
+  <section id="doctors" class="doctors section">
+
+    <!-- Section Title -->
+    <div class="container section-title">
+      {% if not object %}
+        <h1>Crear Paciente</h1> 
+      {% else %}
+        <h1>Editar Paciente</h1>
+      {% endif %}
+    </div><!-- End Section Title -->
+    <div class="container">
+      <div class="row gy-4">
+        <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <!-- Formulario -->
+            <!--
+            <input type="file" name="avatar" class="form-control-file mt-3" id="id_avatar">
+            -->
+            {{ form.as_p }}
+            
+            {% if not object %}
+              <input type="submit" class="btn btn-primary btn-block mt-3" value="Crear">
+            {% else %}
+              <input type="submit" class="btn btn-primary btn-block mt-3" value="Actualizar">
+            
+            {% endif %}
+
+            
+            
+        </form>
+      </div>
+    </div>
+  </section><!-- /Doctors Section -->
+
+{% endblock %}

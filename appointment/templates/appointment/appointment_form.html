@@ -1,0 +1,56 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+  <!-- Doctors Section -->
+  
+  <section id="doctors" class="doctors section">
+
+    <!-- Section Title -->
+    <div class="container section-title">
+        <h2>{{title}}</h2>
+    </div><!-- End Section Title -->
+    <div class="container">
+      <div class="row gy-4">
+        <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            {{ form.as_p }}
+            <script>
+              
+              flatpickr("#id_date", {
+                enableTime: false,
+                minDate: "today",
+                dateFormat: "d/m/Y", // Formato de fecha personalizado
+                locale: "es",
+                disable: [
+                  function(date) {
+                    // return true to disable
+                    return (date.getDay() === 0 || date.getDay() === 6);
+                  }
+                ]
+              });
+              flatpickr("#id_time", {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                defaultDate: "10:00",
+                minuteIncrement: '30',
+                minTime: "10:00",
+                maxTime: "22:30",
+            });
+            </script>
+            
+            {% if not object %}
+              <input type="submit" class="btn btn-primary btn-block mt-3" value="Crear">
+            {% else %}
+              <input type="submit" class="btn btn-primary btn-block mt-3" value="Actualizar">
+            
+            {% endif %}
+
+            
+            
+        </form>
+      </div>
+    </div>
+  </section><!-- /Doctors Section -->
+
+{% endblock %}

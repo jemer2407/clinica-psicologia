@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Especialidades{% endblock %}
+{% block content %}
+
+<!-- Departments Section -->
+<section id="departments" class="departments section">
+
+  <!-- Section Title -->
+  <div class="container section-title">
+    <h2>Especialidades</h2>
+    <p>En el Centro de Psicología somos especialistas en las siguientes areas</p>
+  </div><!-- End Section Title -->
+
+  <div class="container">
+
+    <div class="row">
+      
+      <div class="col-lg-9 mt-4 mt-lg-0">
+        <div class="tab-content">
+          {% for specialty in specialty_list %}
+          
+          <div class="tab-pane active show mb-5" id="departments-tab-1">
+            <div class="row">
+              <div class="col-lg-8 details order-1 order-lg-2">
+                <h3>{{specialty.name}}</h3>
+                <p class="fst-italic">{{specialty.description|safe}}</p>
+                <p><a href="{% url 'specialtys-detail' specialty.id specialty.name|slugify %}">Leer más</a>
+              </div>              
+              <div class="col-lg-4 text-center order-2 order-lg-1">
+                <img src="{{specialty.image.url}}" class="img-fluid">
+              </div>              
+            </div>
+            
+          </div>
+          {% endfor %} 
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section><!-- /Departments Section -->
+{% endblock %}

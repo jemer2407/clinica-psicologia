@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{professional.name|title}} {{professional.surnames|title}}{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 details order-1 order-lg-1">
+            <div class="mt-5 mb-5">
+                <img src="{{professional.image.url}}" width="400px" height="400px" class="img-fluid">
+            </div>
+        </div>
+        <div class="col-lg-8 text-center order-2 order-lg-2">
+            <div class="mt-5">
+                <h2>{{professional.name|title}} {{professional.surnames|title}}</h2>
+                
+                <p>{{professional.speciality}}</p>
+                <p>{{professional.degree}}</p>
+                <p>{{professional.resume|safe}}</p>
+                {% for specialty in professional.specialty.all %} <!-- recorro las especialidades que tiene ese profesional -->        
+                    <a href="{% url 'professional-specialty-list' specialty.id %}" class="link">{{specialty}}</a>{% if not forloop.last %},{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+{% endblock %}

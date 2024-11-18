@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Talleres{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="mt-5">
+  
+            {% for workshop in workshop_list %}
+        
+                <h1><strong>Taller: {{workshop.name}}</strong></h1>
+                <p>
+                    Especialidad: 
+                    <a href="{% url 'workshops-specialty-list' workshop.specialty_id %}">
+                        {{workshop.specialty}}
+                    </a>
+                </p>
+                <p>
+                    Impartido por:
+                    <a href="{% url 'workshops-professional-list' workshop.professional_id %}">
+                        {{workshop.professional|title}}
+                    </a>
+                </p> 
+                <p>{{workshop.description|safe}}</p>
+                <p><a href="{% url 'workshops-detail' workshop.id workshop.name|slugify %}">Leer más</a>
+        
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

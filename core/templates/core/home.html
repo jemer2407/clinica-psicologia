@@ -1,0 +1,69 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+<!-- Hero Section -->
+<section id="hero" class="hero section light-background">
+
+  <img src="{% static 'core/img/banner-clinica.jpg' %}" alt="">
+
+  <div class="container position-relative">
+    <div class="welcome position-relative">
+      <h1>Clínica Psicología</h1>
+      <p>Encuentra la paz interior que buscas</p>
+      <p>Terapia personalizada para tu bienestar emocional</p>
+    </div><!-- End Welcome -->
+
+    <div class="content row gy-4">
+      <div class="col-lg-4 d-flex align-items-stretch">
+        <div class="why-box">
+          <h3>¿Por qué elegirnos?</h3>
+          <p>
+            ¿Buscas resultados tangibles? ¡Nosotros te ayudamos a alcanzarlos! Gracias a nuestras estrategias innovadoras y a nuestro compromiso, hemos logrado [menciona un logro destacado]. Confía en nosotros para transformar tus ideas en realidad.
+          </p>
+          <div class="text-center">
+            <a href="{% url 'about' %}" class="more-btn"><span>Saber más</span> <i class="bi bi-chevron-right"></i></a>
+          </div>
+        </div>
+      </div><!-- End Why Box -->
+
+      <div class="col-lg-8 d-flex align-items-stretch">
+        <div class="d-flex flex-column justify-content-center">
+          <div class="row gy-4">
+
+            <div class="col-xl-4 d-flex align-items-stretch">
+              <div class="icon-box">
+                <i class="bi bi-clipboard-data"></i>
+                <h4>Vocación</h4>
+                <p>Nuestra pasión es acompañarte en tu crecimiento personal</p>
+              </div>
+            </div><!-- End Icon Box -->
+
+            <div class="col-xl-4 d-flex align-items-stretch">
+              <div class="icon-box">
+                <i class="bi bi-gem"></i>
+                <h4>Experiencia</h4>
+                <p>Conocemos tus necesidades y te ofrecemos soluciones basadas en la evidencia</p>
+              </div>
+            </div><!-- End Icon Box -->
+
+            <div class="col-xl-4 d-flex align-items-stretch">
+              <div class="icon-box">
+                <i class="bi bi-inboxes"></i>
+                <h4>Labore consequatur incidid dolore</h4>
+                <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere</p>
+              </div>
+            </div><!-- End Icon Box -->
+
+          </div>
+        </div>
+        
+      </div>
+
+      <a href="{% url 'subscriber-create' %}" class="btn btn-primary" width="50%">Suscribete a nuestra newsletter</a>
+    </div><!-- End  Content-->
+    
+  </div>
+  
+</section><!-- /Hero Section -->
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+  <!-- Doctors Section -->
+  
+  <section id="doctors" class="doctors section">
+
+    <!-- Section Title -->
+    <div class="container section-title">
+      <h2>{{title}}</h2>
+    </div><!-- End Section Title -->
+
+    <div class="container text-center">
+      <div class="row ">
+        <div class="col">
+          <a href="{% url 'specialty-create' %}" class="btn btn-success" id="btn-update-professional">Crear Especialidad</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-5">
+      <div class="row gy-4">
+        <table class="table">
+          <thead>
+              <tr>
+                <th scope="col">Imagen</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Acción</th> 
+              </tr>
+            </thead> 
+            <tbody>
+              {% for specialty in specialty_list %}
+                  <tr>
+                    <td><img src="{{specialty.image.url}}" alt="" class="img-fluid" width='40px' height='40px'></td>
+                    <td>{{specialty.name}}</td>
+                    <td>                      
+                      <a href="{% url 'specialty-update' specialty.id %}" class="btn btn-primary">Editar</a>
+                      <a href="{% url 'specialty-delete' specialty.id %}" class="btn btn-danger">Eliminar</a>  
+                      <a href="{% url 'professionals-specialty-maintenance-list' specialty.id %}" class="btn btn-secondary">Profesionales</a>
+                    </td>
+                  </tr>
+              {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section><!-- /Doctors Section -->
+
+{% endblock %}

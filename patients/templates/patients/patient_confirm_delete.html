@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Paciente{% endblock %}
+{% block content %}
+  <!-- Doctors Section -->
+  
+  <section id="doctors" class="doctors section">
+
+    <!-- Section Title -->
+    <div class="container section-title">
+      <h1>Eliminar Paciente</h1>      
+    </div><!-- End Section Title -->
+    <div class="container">
+      <div class="row gy-4">
+        <form method="post">{% csrf_token %}
+            <p>¿Seguro que quieres eliminar a <strong>{{object.name|title}} {{object.surnames|title}}</strong>?</p>
+            
+            <input type="submit" value="Confirmar" class="btn btn-success">
+            <a href="{% url 'patients-list' %}" class="btn btn-danger" id="btn-delete-professional">Cancelar</a> 
+        </form>
+      </div>
+    </div>
+  </section><!-- /Doctors Section -->
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Talleres{% endblock %}
+{% block content %}
+
+<!-- Services Section -->
+<section id="services" class="services section">
+
+  <!-- Section Title -->
+  <div class="container section-title">
+    <h2>Talleres</h2>
+    <p>Nuestros profesionales imparten los siguientes talleres</p>
+  </div><!-- End Section Title -->
+
+  <div class="container">
+    <div class="row gy-4">
+      {% for workshop in workshop_list %}
+
+        <div class="col-lg-4 col-md-6">
+          <div class="service-item position-relative">
+            <div class="icon">
+              <i class="fas fa-heartbeat"></i>
+            </div>
+            <a href="{% url 'workshops-detail' workshop.id workshop.name|slugify %}" class="stretched-link">
+              <h3>{{workshop.name}}</h3>
+            </a>
+            <p>{{workshop.description|safe}}</p>
+          </div>
+        </div><!-- End Service Item -->
+
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

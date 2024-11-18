@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock %} | Clínica Psicología</title>
+    {% load static %}
+    
+    <!-- Favicons -->
+    <link href="{% static 'core/img/logo2.png' %}" rel="icon">
+    <link href="{% static 'core/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+    
+    <!-- flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'core/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'core/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'core/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'core/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'core/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'core/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="{% static 'core/css/main.css' %}" rel="stylesheet">
+  </head>
+  
+  <body class="index-page">
+    <!-- Navegación -->
+    <header id="header" class="header sticky-top">
+
+      <div class="topbar d-flex align-items-center">
+        <div class="container d-flex justify-content-center justify-content-md-between">
+          <div class="contact-info d-flex align-items-center">
+            <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:info@clinica-psicologia.com">info@clinica-psicologia.com</a></i>
+            <i class="bi bi-phone d-flex align-items-center ms-4"><a href="tel:+341111111"><span>6111111</span></a></i>
+          </div>
+          <div class="social-links d-none d-md-flex align-items-center">
+            <a href="https://x.com/" class="twitter" target=”_blank”><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.facebook.com/" class="facebook" target=”_blank”><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/" class="instagram" target=”_blank”><i class="bi bi-instagram"></i></a>
+            <a href="https://es.linkedin.com/" class="linkedin" target=”_blank”><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+      </div><!-- End Top Bar -->
+  
+      <div class="branding d-flex align-items-center">
+  
+        <div class="container position-relative d-flex align-items-center justify-content-between">
+          <div class="row">
+            <div class="col-4">
+              <a href="{% if not request.user.is_authenticated %}{% url 'home' %}{% else %}{% url 'appointment-list' %}{% endif %}" class="logo d-flex align-items-center me-auto">
+                <img src="{% static 'core/img/logo2.png' %}" alt="" width="100px" class="img-fluid">
+              </a>
+            </div>
+            <div class="col-8">
+  
+              <nav id="navmenu" class="navmenu align-items-center">
+                <ul>
+                  {% if not request.user.is_authenticated %}
+                    <li><a href="{% url 'home' %}">Inicio</a></li>
+                    <li><a href="{% url 'about' %}">Sobre nosotros</a></li>
+                    <li><a href="{% url 'professionals-list' %}">Profesionales</a></li>
+                    <li><a href="{% url 'specialtys-list' %}">Especialidades</a></li>
+                    <li><a href="{% url 'workshops-list' %}">Talleres</a></li>
+                    <li><a href="{% url 'contact' %}">Contacto</a></li>
+                  {% endif %}
+                
+                
+                  {% if not request.user.is_authenticated %}
+                    <li>
+                      <a class="nav-link" href="{% url 'login' %}">Acceder</a>  <!-- Link para mostrar la template de login que provee Django -->
+                    </li>
+                    
+                  {% else %}
+                  <!--
+                    <li>
+                      <a class="nav-link" href="{% url 'signup' %}">Registro</a>
+                    </li>-->
+                    <li>
+                      <a class="nav-link" href="{% url 'appointment-list' %}">Citas</a>
+                    </li>
+                    <li>
+                      <a class="nav-link" href="{% url 'professionals-maintenance-list' %}">Profesionales</a>
+                    </li>
+                    <li>
+                      <a class="nav-link" href="{% url 'specialtys-maintenance-list' %}">Especialidades</a>
+                    </li>
+                    <li>
+                      <a class="nav-link" href="{% url 'patients-list' %}">Pacientes</a>
+                    </li>
+                    <li>
+                      <a class="nav-link" href="{% url 'companies-list' %}">Compañías</a>
+                    </li>
+                    <li>
+                      <a class="nav-link" href="{% url 'workshops-maintenance-list' %}">Talleres</a>
+                    </li>
+                    <li>
+                      <a class="nav-link" href="{% url 'subscribers-list' %}">Email Marketing</a>
+                    </li>
+                    
+                    <!--
+                    <li>
+                      <a class="nav-link" href="{% url 'profile' %}">Perfil</a>
+                    </li>-->
+                    <li>
+                      <form id="logout-form" method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link">Salir</button>
+                      </form>
+                    </li>
+                  {% endif %}
+
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+              </nav>
+            </div>
+  
+          <!--<a class="cta-btn d-none d-sm-block" href="#appointment">Make an Appointment</a>-->
+  
+        </div>
+  
+      </div>
+  
+    </header>
+    <!-- Contenido -->
+    {% block content %}{% endblock %}
+    
+    <footer id="footer" class="footer light-background">
+      <div class="container footer-top text-center mt-4">
+        <!-- recorro el contexto devuelto desde la funcion ctx_dict de processors.py -->
+      
+      {% for page in pages %}
+      <a href="{% url 'page' page.id page.title|slugify %}" class="link">{{page.title}}</a>{% if not forloop.last %} - {% endif %}
+      {% endfor %}
+      </div>
+      <div class="container copyright text-center mt-4">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">Clínica Psicología</strong> <span>Todos los derechos reservados</span></p>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you've purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+          Desarrollado por <a href="https://jesustrillesaguilar.com">Jesús Trilles</a>
+        </div>
+      </div>
+  
+    </footer>
+      
+    <!-- Javascript -->
+    <!-- Vendor JS Files -->
+    <script src="{% static 'core/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'core/vendor/php-email-form/validate.js' %}"></script>
+    <script src="{% static 'core/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'core/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'core/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+    <script src="{% static 'core/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+    <!-- Main JS File -->
+    <script src="{% static 'core/js/main.js' %}"></script>
+
+    <!-- flatpickr -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  </body>
+</html>
