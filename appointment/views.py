@@ -15,7 +15,6 @@ from .forms import AppointmentForm
 
 def send_email(subject, message, patient, appointment):
     
-    
     email = EmailMessage(
                     subject,
                     message.format(patient, appointment.date, appointment.time, appointment.professional),
@@ -100,6 +99,8 @@ class AppointmentCreateView(CreateView):
         response = super().form_valid(form)
         appointment = self.object
         patient = Patient.objects.get(id=appointment.patient.id)
+
+        
         subject = "Clínica Psicología: Nueva cita"
         message = "Hola {},\n\n usted tiene cita el {} a las {} con {} "
         
