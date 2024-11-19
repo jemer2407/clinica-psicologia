@@ -13,12 +13,12 @@ from .models import Appointment
 from patients.models import Patient
 from .forms import AppointmentForm
 
-def send_email(appointment):
-    patient = Patient.objects.get(id=appointment.patient.id)
+def send_email(subject, message, patient, appointment):
+    
     
     email = EmailMessage(
-                    "Clínica Psicología: Nueva cita",
-                    "Tiene cita el {} a las {} con {} ".format(appointment.date, appointment.time, appointment.professional),
+                    subject,
+                    message.format(patient, appointment.date, appointment.time, appointment.professional),
                     "no-contestar@clinica-psicologia.com",
                     [patient.email],
                     #reply_to=[subscriber.email]
@@ -95,8 +95,10 @@ class AppointmentCreateView(CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         appointment = self.object
-        patient = appointment.patient
-        send_email(appointment)
+        patient = Patient.objects.get(id=appointment.patient.id)
+        subject = "Clínica Psicología: Nueva cita"
+        message = "Hola {},\n\n usted tiene cita el {} a las {} con {} "
+        send_email(subject, message, patient, appointment)
         return response
     
 
@@ -111,6 +113,15 @@ class AppointmentUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Editar Cita'
         return context
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        appointment = self.object
+        patient = Patient.objects.get(id=appointment.patient.id)
+        subject = "Clínica Psicología: Modificación de cita"
+        message = "Hola {},\n\n Su cita ha sido modificada al {} a las {} con {} "
+        send_email(subject, message, patient, appointment)
+        return response
 
 # vista para editar una cita
 class AppointmentDeleteView(DeleteView):
@@ -122,4 +133,13 @@ class AppointmentDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Eliminar Cita'
         return context
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        appointment = self.object
+        patient = Patient.objects.get(id=appointment.patient.id)
+        subject = "Clínica Psicología: Cancelación de cita"
+        message = "Hola {},\n\n Su cita del {} a las {} con {} ha sido cancelada"
+        send_email(subject, message, patient, appointment)
+        return response
 
