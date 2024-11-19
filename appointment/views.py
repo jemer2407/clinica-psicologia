@@ -1,11 +1,11 @@
-from django.forms import BaseModelForm
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.core.mail import EmailMessage
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
 import datetime
 import holidays
 
@@ -49,8 +49,7 @@ class Year:
     def add_element(self, element):
         self.datos.append(element)
 
-
-
+@method_decorator(staff_member_required, name='dispatch')
 class AppointmentListView(ListView):
     model = Appointment
     template_name = 'appointment/appointment_list.html'
@@ -61,6 +60,7 @@ class AppointmentListView(ListView):
         context['today'] = datetime.date.today().strftime("%Y-%m-%d")
         return context
     
+@method_decorator(staff_member_required, name='dispatch')
 class AppointmentPatientListView(ListView):
     model = Appointment
     template_name = 'appointment/appointment_list.html'
@@ -75,6 +75,7 @@ class AppointmentPatientListView(ListView):
         return context
 
 # vista para crear una cita
+@method_decorator(staff_member_required, name='dispatch')
 class AppointmentCreateView(CreateView):
     model = Appointment
     form_class = AppointmentForm
@@ -114,6 +115,7 @@ class AppointmentCreateView(CreateView):
     
 
 # vista para editar una cita
+@method_decorator(staff_member_required, name='dispatch')
 class AppointmentUpdateView(UpdateView):
     model = Appointment
     form_class = AppointmentForm
@@ -139,6 +141,7 @@ class AppointmentUpdateView(UpdateView):
             return redirect(reverse_lazy('appointment-list') + "?updatefail")
 
 # vista para editar una cita
+@method_decorator(staff_member_required, name='dispatch')
 class AppointmentDeleteView(DeleteView):
     model = Appointment
     template_name = 'appointment/appointment_confirm_delete.html'

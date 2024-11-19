@@ -6,6 +6,8 @@ from django.views.generic.list import ListView
 from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import EmailMessage
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
 from .models import Subscriber
 from .forms import SuscriberForm, EmailMarketingForm
 
@@ -21,6 +23,7 @@ class SubscriberCreateView(SuccessMessageMixin, CreateView):
 
 
 # vista privada para listar los suscritores a la newsletter
+@method_decorator(staff_member_required, name='dispatch')
 class SubscriberListView(ListView):
     model = Subscriber
     template_name = 'emailmarketing/subscribers_list.html'
@@ -31,7 +34,8 @@ class SubscriberListView(ListView):
         return context
 
 # vista para crear suscriptores desde login
-# vista pública para suscribirse a la newsletter
+# vista privada para suscribirse a la newsletter
+@method_decorator(staff_member_required, name='dispatch')
 class LoginSubscriberCreateView(CreateView):
     model = Subscriber
     form_class = SuscriberForm
@@ -45,6 +49,7 @@ class LoginSubscriberCreateView(CreateView):
 
 
 # vista para editar un paciente
+@method_decorator(staff_member_required, name='dispatch')
 class SubscriberUpdateView(UpdateView):
     model = Subscriber
     form_class = SuscriberForm
@@ -57,6 +62,7 @@ class SubscriberUpdateView(UpdateView):
         return context
 
 # vista para eliminar un paciente
+@method_decorator(staff_member_required, name='dispatch')
 class SubscriberDeleteView(DeleteView):
     model = Subscriber
     template_name = 'emailmarketing/subscriber_confirm_delete.html'
@@ -68,6 +74,7 @@ class SubscriberDeleteView(DeleteView):
         return context
 
 # vista para la campaña de email marketing
+@method_decorator(staff_member_required, name='dispatch')
 def emailMarketing(request):
 
     title = 'Campaña Email Marketing'

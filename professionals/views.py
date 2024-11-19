@@ -7,6 +7,8 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
 from .models import Professional
 from specialtys.models import Specialty
 from .forms import ProfessionalForm
@@ -30,7 +32,7 @@ class ProfessionalBySpecialtyListView(ListView):
         return Professional.objects.filter(specialty=specialty_id)
 
 # ------------------ vista para listar los profesionales en una tabla ----------------------
-
+@method_decorator(staff_member_required, name='dispatch')
 class LoginProfessionalsListView(ListView):
     model = Professional
     template_name = 'professionals/professional_maintenance_list.html'
@@ -41,6 +43,7 @@ class LoginProfessionalsListView(ListView):
         return context
 
 # vista para listar los profesionales de una especialidad
+@method_decorator(staff_member_required, name='dispatch')
 class LoginProfessionalBySpecialtyListView(ListView):
     model = Professional
     #template_name = 'patients/patients_professional_list.html'
@@ -56,6 +59,7 @@ class LoginProfessionalBySpecialtyListView(ListView):
         return context
 
 # vista para crear un profesional
+@method_decorator(staff_member_required, name='dispatch')
 class ProfessionalCreateView(CreateView):
     model = Professional
     form_class = ProfessionalForm
@@ -70,6 +74,7 @@ class ProfessionalCreateView(CreateView):
 
 
 # vista para editar un profesional
+@method_decorator(staff_member_required, name='dispatch')
 class ProfessionalUpdateView(UpdateView):
     model = Professional
     form_class = ProfessionalForm
@@ -81,6 +86,7 @@ class ProfessionalUpdateView(UpdateView):
         return context
     
 # vista para eliminar un profesional
+@method_decorator(staff_member_required, name='dispatch')
 class ProfessionalDeleteView(DeleteView):
     model = Professional
     template_name = 'professionals/professional_confirm_delete.html'

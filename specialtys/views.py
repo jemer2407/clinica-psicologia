@@ -3,6 +3,8 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
 from .models import Specialty
 from .forms import SpecialtyForm
 
@@ -18,6 +20,7 @@ class SpecialtyDetailView(DetailView):
 
 
 # -------------- vista para listar las especialidades con usuario logueado --------------
+@method_decorator(staff_member_required, name='dispatch')
 class LoginSpecialtyListView(ListView):
     model = Specialty
     template_name = 'specialtys/specialty_maintenance_list.html'
@@ -27,6 +30,7 @@ class LoginSpecialtyListView(ListView):
         return context
 
 # vista para crear una especialidad
+@method_decorator(staff_member_required, name='dispatch')
 class SpecialtyCreateView(CreateView):
     model = Specialty
     form_class = SpecialtyForm
@@ -34,6 +38,7 @@ class SpecialtyCreateView(CreateView):
     success_url = reverse_lazy('specialtys-maintenance-list')
 
 # vista para editar una especialidad
+@method_decorator(staff_member_required, name='dispatch')
 class SpecialtyUpdateView(UpdateView):
     model = Specialty
     form_class = SpecialtyForm
@@ -41,6 +46,7 @@ class SpecialtyUpdateView(UpdateView):
     success_url = reverse_lazy('specialtys-maintenance-list')
 
 # vista para eliminar una especialidad
+@method_decorator(staff_member_required, name='dispatch')
 class SpecialtyDeleteView(DeleteView):
     model = Specialty
     template_name = 'specialtys/specialty_confirm_delete.html'
