@@ -20,6 +20,7 @@ class Patient(models.Model):
     surnames = models.CharField(max_length=100, verbose_name='Apellidos')
     company = models.ForeignKey(Company, verbose_name='Compañía Seguro', blank=True, null=True, on_delete=models.CASCADE)
     professional = models.ForeignKey(Professional, on_delete=models.CASCADE, verbose_name='Profesional')
+    email = models.EmailField(verbose_name='Email', max_length=100, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Paciente'

@@ -10,14 +10,16 @@ class PatientForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Nombre'}),
             'surnames': forms.TextInput(attrs={'class':'form-control', 'placeholder': 'Apellidos'}),
             'company': forms.Select(attrs={'class':'form-control'}),
-            'professional': forms.Select(attrs={'class':'form-control'})
+            'professional': forms.Select(attrs={'class':'form-control'}),
+            'email': forms.EmailInput(attrs={'class':'form-control', 'placeholder': 'Email'})
             
         }
         labels = {
             'name':'', 
             'surnames':'',
             'company': 'Compañía Médica',
-            'professional':'Profesional'
+            'professional':'Profesional',
+            'email': ''
         }
 
 class CompanyForm(forms.ModelForm):

@@ -1,14 +1,37 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.forms import BaseModelForm
+from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy
+from django.core.mail import EmailMessage
 import datetime
 import holidays
 
 from .models import Appointment
 from patients.models import Patient
 from .forms import AppointmentForm
+
+def send_email(appointment):
+    patient = Patient.objects.get(id=appointment.patient.id)
+    
+    email = EmailMessage(
+                    "Clínica Psicología: Nueva cita",
+                    "Tiene cita el {} a las {} con {} ".format(appointment.date, appointment.time, appointment.professional),
+                    "no-contestar@clinica-psicologia.com",
+                    [patient.email],
+                    #reply_to=[subscriber.email]
+                )
+    try:
+        email.send()
+        # Todo ha ido bien y rediccionamos a ok
+        #return redirect(reverse('campaign-email-form') + "?ok")
+    except:
+        # algo no ha ido bien y rediccionamos a FAIL
+        return redirect(reverse('appointment-create') + "?fail")
+    return redirect(reverse('appointment-create') + "?ok")
+
 # Create your views here.
 
 def obtener_proximos_5_anos():
@@ -66,11 +89,15 @@ class AppointmentCreateView(CreateView):
 
         # Convertir las fechas festivas a un formato compatible con Flatpickr
         holiday_dates = [holiday.strftime('%Y-%m-%d') for holiday in holidays_spain]
-        
         context['holidays'] = holiday_dates
-        print(context['holidays'])
         return context
-
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        appointment = self.object
+        patient = appointment.patient
+        send_email(appointment)
+        return response
     
 
 # vista para editar una cita
