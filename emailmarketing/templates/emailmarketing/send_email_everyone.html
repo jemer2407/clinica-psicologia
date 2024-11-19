@@ -13,9 +13,7 @@
     <div class="container">
       <div class="row gy-4">
         <!-- Formulario de contacto -->
-        {% if 'ok' in request.GET %}
-            <p><b>Campaña enviada correctamente</b></p>
-        {% endif %}
+        
         <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
             <!-- Formulario -->
             {{ form.as_p }}

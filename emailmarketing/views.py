@@ -101,8 +101,9 @@ def emailMarketing(request):
                     #return redirect(reverse('campaign-email-form') + "?ok")
                 except:
                     # algo no ha ido bien y rediccionamos a FAIL
-                    return redirect(reverse('campaign-email-form') + "?fail")
-            return redirect(reverse('campaign-email-form') + "?ok")
+                    
+                    return redirect(reverse('subscribers-list') + "?fail")
+            return redirect(reverse('subscribers-list') + "?ok")
         
     return render(request, 'emailmarketing/send_email_everyone.html', {
         'title': title,

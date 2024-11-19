@@ -26,11 +26,14 @@ def send_email(subject, message, patient, appointment):
     try:
         email.send()
         # Todo ha ido bien y rediccionamos a ok
-        #return redirect(reverse('campaign-email-form') + "?ok")
+        return True
+        #return redirect(reverse_lazy('appointment-list') + "?ok")
+    
     except:
         # algo no ha ido bien y rediccionamos a FAIL
-        return redirect(reverse('appointment-create') + "?fail")
-    return redirect(reverse('appointment-create') + "?ok")
+        return False
+        #return redirect(reverse_lazy('appointment-list') + "?fail")
+    
 
 # Create your views here.
 
@@ -90,6 +93,7 @@ class AppointmentCreateView(CreateView):
         # Convertir las fechas festivas a un formato compatible con Flatpickr
         holiday_dates = [holiday.strftime('%Y-%m-%d') for holiday in holidays_spain]
         context['holidays'] = holiday_dates
+        
         return context
     
     def form_valid(self, form):
@@ -98,8 +102,14 @@ class AppointmentCreateView(CreateView):
         patient = Patient.objects.get(id=appointment.patient.id)
         subject = "Clínica Psicología: Nueva cita"
         message = "Hola {},\n\n usted tiene cita el {} a las {} con {} "
-        send_email(subject, message, patient, appointment)
-        return response
+        
+        if send_email(subject, message, patient, appointment):
+            return redirect(reverse_lazy('appointment-list') + "?createok")
+        else:
+            return redirect(reverse_lazy('appointment-list') + "?createfail")
+        
+
+        #return response
     
 
 # vista para editar una cita
@@ -112,6 +122,7 @@ class AppointmentUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Editar Cita'
+        
         return context
     
     def form_valid(self, form):
@@ -120,8 +131,11 @@ class AppointmentUpdateView(UpdateView):
         patient = Patient.objects.get(id=appointment.patient.id)
         subject = "Clínica Psicología: Modificación de cita"
         message = "Hola {},\n\n Su cita ha sido modificada al {} a las {} con {} "
-        send_email(subject, message, patient, appointment)
-        return response
+        
+        if send_email(subject, message, patient, appointment):
+            return redirect(reverse_lazy('appointment-list') + "?updateok")
+        else:
+            return redirect(reverse_lazy('appointment-list') + "?updatefail")
 
 # vista para editar una cita
 class AppointmentDeleteView(DeleteView):
@@ -132,6 +146,7 @@ class AppointmentDeleteView(DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Eliminar Cita'
+        
         return context
     
     def form_valid(self, form):
@@ -140,6 +155,8 @@ class AppointmentDeleteView(DeleteView):
         patient = Patient.objects.get(id=appointment.patient.id)
         subject = "Clínica Psicología: Cancelación de cita"
         message = "Hola {},\n\n Su cita del {} a las {} con {} ha sido cancelada"
-        send_email(subject, message, patient, appointment)
-        return response
+        if send_email(subject, message, patient, appointment):
+            return redirect(reverse_lazy('appointment-list') + "?deleteok")
+        else:
+            return redirect(reverse_lazy('appointment-list') + "?deletefail")
 

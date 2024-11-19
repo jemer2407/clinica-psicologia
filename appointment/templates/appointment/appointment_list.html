@@ -13,6 +13,13 @@
 
     <div class="container text-center">
       <div class="row ">
+        {% if 'createok' in request.GET %}
+          <p><b>Cita creada y enviado email al paciente con éxito</b></p>
+        {% elif 'updateok' in request.GET %}
+          <p><b>Cita modificada y enviado email al paciente con éxito</b></p>
+        {% elif 'deleteok' in request.GET %}
+          <p><b>Cita eliminada y enviado email al paciente con éxito</b></p>
+        {% endif %}
         <div class="col-8">
           <a href="{% url 'appointment-create' %}" class="btn btn-success">Nueva Cita</a>
         </div>
