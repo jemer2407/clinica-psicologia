@@ -19,8 +19,6 @@
           <p><b>Cita modificada y enviado email al paciente con éxito</b></p>
         {% elif 'deleteok' in request.GET %}
           <p><b>Cita eliminada y enviado email al paciente con éxito</b></p>
-        {% elif 'datetimefail' in request.GET %}
-          <p><b>Ya hay una cita con esa fecha y hora</b></p>
         {% endif %}
         <div class="col-8">
           <a href="{% url 'appointment-create' %}" class="btn btn-success">Nueva Cita</a>
@@ -30,7 +28,6 @@
             <div class="input-group-prepend">
               <button class="btn btn-outline-primary" type="button">Buscar</button>
             </div>
-            
             <input type="text" class="form-control" id="search-patient" placeholder="Paciente" aria-label="" aria-describedby="basic-addon1" name="find-patient">
           </div>
         </div>

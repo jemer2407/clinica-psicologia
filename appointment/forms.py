@@ -24,4 +24,14 @@ class AppointmentForm(forms.ModelForm):
             
         }
     
+    def clean_time(self):
+        professional = self.cleaned_data.get('professional')
+        date = self.cleaned_data.get('date')
+        time = self.cleaned_data.get('time')
+
+        
+        if  Appointment.objects.filter(professional=professional).filter(date=date).filter(time=time):
+            raise forms.ValidationError('La cita está ya asignada a otro paciente, elige otra')
+        return time
+    
     
