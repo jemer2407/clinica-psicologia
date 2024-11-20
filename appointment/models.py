@@ -9,6 +9,7 @@ class Appointment(models.Model):
     professional = models.ForeignKey(Professional, on_delete=models.CASCADE, verbose_name='Profesional')
     date = models.DateField(verbose_name='Fecha')
     time = models.TimeField(verbose_name='Hora')
+    # añadir campo observaciones para que el profesional escriba sus notas una vez finalice la cita con el paciente
 
 
     class Meta:
