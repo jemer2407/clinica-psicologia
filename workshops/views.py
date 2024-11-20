@@ -3,6 +3,8 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
 from .models import Workshop
 from professionals.models import Professional
 from specialtys.models import Specialty
@@ -36,6 +38,7 @@ class WorkshopSpecialtyListView(ListView):
         return Workshop.objects.filter(specialty=specialty_id)
 
 # ------------ vista para listar los talleres con usuario logueado ---------------
+@method_decorator(staff_member_required, name='dispatch')
 class LoginWorkshopListView(ListView):
     model = Workshop
     template_name = 'workshop/workshop_maintenance_list.html'
@@ -47,6 +50,7 @@ class LoginWorkshopListView(ListView):
         return context
 
 # vista para crear un taller
+@method_decorator(staff_member_required, name='dispatch')
 class WorkshopCreateView(CreateView):
     model = Workshop
     form_class = WorkshopForm
@@ -54,6 +58,7 @@ class WorkshopCreateView(CreateView):
     success_url = reverse_lazy('workshops-maintenance-list')
 
 # vista para editar un taller
+@method_decorator(staff_member_required, name='dispatch')
 class WorkshopUpdateView(UpdateView):
     model = Workshop
     form_class = WorkshopForm
@@ -61,12 +66,13 @@ class WorkshopUpdateView(UpdateView):
     success_url = reverse_lazy('workshops-maintenance-list')
 
 # vista para eliminar una especialidad
+@method_decorator(staff_member_required, name='dispatch')
 class WorkshopDeleteView(DeleteView):
     model = Workshop
     template_name = 'workshop/workshop_confirm_delete.html'
     success_url = reverse_lazy('workshops-maintenance-list')
 
-
+@method_decorator(staff_member_required, name='dispatch')
 class LoginWorkshopProfessionalListView(ListView):
     model = Workshop
     template_name = 'workshop/workshop_maintenance_list.html'
