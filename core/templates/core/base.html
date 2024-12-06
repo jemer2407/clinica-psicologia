@@ -10,12 +10,7 @@
     <link href="{% static 'core/img/logo2.png' %}" rel="icon">
     <link href="{% static 'core/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
     
-    <!-- flatpickr -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     
-
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -112,7 +107,7 @@
                       <a class="nav-link" href="{% url 'profile' %}">Perfil</a>
                     </li>-->
                     <li>
-                      <form id="logout-form" method="post" action="{% url 'login' %}">
+                      <form id="logout-form" method="post" action="{% url 'logout' %}">
                         {% csrf_token %}
                         <button type="submit" class="nav-link">Salir</button>
                       </form>

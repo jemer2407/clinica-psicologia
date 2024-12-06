@@ -74,7 +74,7 @@ class SubscriberDeleteView(DeleteView):
         return context
 
 # vista para la campaña de email marketing
-@method_decorator(staff_member_required, name='dispatch')
+@staff_member_required
 def emailMarketing(request):
 
     title = 'Campaña Email Marketing'
